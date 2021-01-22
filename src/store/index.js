@@ -33,7 +33,7 @@ export default createStore({
     async login(context, payload) {
       const { email, password } = payload;
       const authReq = axios.post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDSDS_F7tUc8QEbBwy-HiHu8Wy1Su3adQw", {
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.VUE_APP_API_KEY}`, {
         email,
         password,
         returnSecureToken: true
@@ -59,7 +59,7 @@ export default createStore({
     async signup(context, payload) {
       const { name, email, password } = payload;
       const authRes = await axios.post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDSDS_F7tUc8QEbBwy-HiHu8Wy1Su3adQw", {
+        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.VUE_APP_API_KEY}`, {
         email,
         password,
         returnSecureToken: true
