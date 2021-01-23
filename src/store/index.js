@@ -15,6 +15,7 @@ export default createStore({
     },
     removeUser(state) {
       state.user = {};
+      state.finished = false;
     },
     setLevel(state, payload) {
       state.level = payload;
