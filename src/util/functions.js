@@ -23,13 +23,12 @@ const sudokuBoard = cells => {
 }
 
 export const emptySudokuCells = (board, level) => {
-    const cells = sudokuCells(board);
-    const newCells = [...cells];
+    const newCells = sudokuCells(board);
     const cellsToEmpty = level === 1 ? 21 : level === 2 ? 41 : 60;
     for (let i = 0; i < cellsToEmpty; i++) {
         let indexToEmpty;
         while (!indexToEmpty || newCells[indexToEmpty] === "") {
-            indexToEmpty = Math.floor(Math.random() * cells.length);
+            indexToEmpty = Math.floor(Math.random() * newCells.length);
         }
         newCells[indexToEmpty] = "";
     }

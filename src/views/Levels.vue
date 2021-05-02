@@ -3,9 +3,7 @@
     <div class="level-choice__content">
       <h3 class="level-choice__subheading">Pick a level:</h3>
       <div class="level-choice__buttons">
-        <LevelButton :level="1" />
-        <LevelButton :level="2" />
-        <LevelButton :level="3" />
+        <LevelButton v-for="level in levels" :key="level" :level="level" />
       </div>
     </div>
   </Page>
@@ -19,6 +17,9 @@ export default {
   computed: {
     name() {
       return this.$store.getters.user.name;
+    },
+    levels() {
+      return Array.from({ length: 3 }, (_, i) => i + 1);
     },
   },
 };

@@ -9,11 +9,10 @@
         <input
           v-for="(col, colIndex) in row"
           :key="colIndex"
-          :class="
-            initialBoard[rowIndex][colIndex] !== ''
-              ? 'board__cell board__cell--prefilled'
-              : 'board__cell'
-          "
+          :class="{
+            board__cell: true,
+            'board__cell--prefilled': initialBoard[rowIndex][colIndex] !== '',
+          }"
           :readonly="initialBoard[rowIndex][colIndex] !== ''"
           :maxlength="1"
           :value="userBoard[rowIndex][colIndex]"
