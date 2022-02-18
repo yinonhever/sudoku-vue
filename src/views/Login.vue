@@ -51,7 +51,8 @@ export default {
       try {
         await this.$store.dispatch("login", this.formData);
         this.$router.replace("/levels");
-      } catch {
+      } catch (error) {
+        console.log(error.response?.data?.msg || error.message);
         this.error = true;
         this.loading = false;
       }

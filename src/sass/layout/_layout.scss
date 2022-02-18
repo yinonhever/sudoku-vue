@@ -1,8 +1,15 @@
 // GENERAL LAYOUT
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .main {
   padding: 5rem $padding-side-desktop 8rem;
   overflow: hidden;
   position: relative;
+  flex: 1;
 
   @include respond(mobile) {
     padding: 4rem $padding-side-mobile 6rem;

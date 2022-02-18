@@ -7,7 +7,7 @@ export default createStore({
     user: {},
     level: null,
     finished: false,
-    success: false
+    success: false,
   },
   mutations: {
     setUser(state, payload) {
@@ -28,25 +28,29 @@ export default createStore({
     restartGame(state) {
       state.finished = false;
       state.level = null;
-    }
+    },
   },
   actions: {
     async login(context, payload) {
       const { email, password } = payload;
       const authReq = axios.post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.VUE_APP_API_KEY}`, {
-        email,
-        password,
-        returnSecureToken: true
-      });
-      const profileReq = axios.get("https://sudoku-6c11e.firebaseio.com/profiles.json");
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.VUE_APP_API_KEY}`,
+        {
+          email,
+          password,
+          returnSecureToken: true,
+        }
+      );
+      const profileReq = axios.get(
+        "https://sudoku-6c11e.firebaseio.com/profiles.json"
+      );
       const [authRes, profileRes] = await axios.all([authReq, profileReq]);
       const profiles = [];
       for (let key in profileRes.data) {
         profiles.push({ id: key, ...profileRes.data[key] });
       }
-      const matchingUser = profiles.find(user => user.email === email);
-      if (!matchingUser) throw new Error();
+      const matchingUser = profiles.find((user) => user.email === email);
+      if (!matchingUser) throw new Error("No matching user found");
 
       const { id, name, score } = matchingUser;
       const { idToken, expiresIn } = authRes.data;
@@ -60,11 +64,13 @@ export default createStore({
     async signup(context, payload) {
       const { name, email, password } = payload;
       const authRes = await axios.post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.VUE_APP_API_KEY}`, {
-        email,
-        password,
-        returnSecureToken: true
-      });
+        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.VUE_APP_API_KEY}`,
+        {
+          email,
+          password,
+          returnSecureToken: true,
+        }
+      );
       const profileRes = await axios.post(
         `https://sudoku-6c11e.firebaseio.com/profiles.json?auth=${authRes.data.idToken}`,
         { name, email, score: 0 }
@@ -119,7 +125,7 @@ export default createStore({
     },
     restartGame(context) {
       context.commit("restartGame");
-    }
+    },
   },
   getters: {
     isAuth(state) {
@@ -136,6 +142,6 @@ export default createStore({
     },
     success(state) {
       return state.success;
-    }
-  }
+    },
+  },
 });
